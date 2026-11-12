@@ -7,7 +7,6 @@ const router = Router();
 const ROLES = ['super_admin', 'receptionist', 'doctor', 'cashier'];
 const cols = 'id, full_name, username, role, active, created_at';
 
-// Dhammaan users-ka (doctor list waa loo oggol yahay receptionist si ballan loo sameeyo)
 router.get('/doctors', auth, wrap(async (_req, res) => {
   const { rows } = await query("SELECT id, full_name FROM users WHERE role='doctor' AND active ORDER BY full_name");
   res.json(rows);
@@ -46,3 +45,10 @@ router.patch('/:id/toggle', wrap(async (req, res) => {
 }));
 
 router.delete('/:id', wrap(async (req, res) => {
+  if (Number(req.params.id) === req.user.id)
+    return res.status(400).json({ message: 'Akoonkaaga ma tirtiri kartid' });
+  await query('DELETE FROM users WHERE id=$1', [req.params.id]);
+  res.json({ ok: true });
+}));
+
+export default router;
