@@ -7,7 +7,6 @@ import patientRoutes from './routes/patients.js';
 import appointmentRoutes from './routes/appointments.js';
 import invoiceRoutes from './routes/invoices.js';
 import dashboardRoutes from './routes/dashboard.js';
-import reportRoutes from './routes/reports.js';
 
 dotenv.config();
 const app = express();
@@ -22,7 +21,6 @@ app.use('/api/patients', patientRoutes);
 app.use('/api/appointments', appointmentRoutes);
 app.use('/api/invoices', invoiceRoutes);
 app.use('/api/dashboard', dashboardRoutes);
-app.use('/api/reports', reportRoutes);
 
 app.use((err, _req, res, _next) => {
   console.error(err);
